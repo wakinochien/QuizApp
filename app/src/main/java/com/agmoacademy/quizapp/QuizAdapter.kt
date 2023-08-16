@@ -13,7 +13,7 @@ import com.agmoacademy.quizapp.model.Question
  * Adapter for the [RecyclerView] in [MainActivity]. Displays [Question] data object.
  */
 class QuizAdapter(
-    private val dataset: List<Question>,
+    private val dataset: MutableList<Question>,
 ) : RecyclerView.Adapter<QuizAdapter.ItemViewHolder>() {
 
     // Provide a reference to the views for each data item
@@ -64,4 +64,12 @@ class QuizAdapter(
         holder.radioButton4.text = questionList.get(3)
     }
 
+    fun clear() {
+        dataset.clear()
+    }
+
+    fun addAll(list: List<Question>) {
+        dataset.addAll(list)
+        notifyDataSetChanged()
+    }
 }
