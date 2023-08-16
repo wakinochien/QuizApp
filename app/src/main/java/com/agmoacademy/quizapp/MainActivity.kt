@@ -5,6 +5,7 @@ import android.view.View
 import android.view.View.OnClickListener
 import android.widget.Button
 import android.widget.FrameLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
@@ -15,13 +16,14 @@ import com.agmoacademy.quizapp.model.Question
 import com.agmoacademy.quizapp.viewmodel.ApiStatus
 import com.agmoacademy.quizapp.viewmodel.QuizViewModel
 
-class MainActivity : AppCompatActivity(), OnClickListener {
+class MainActivity : AppCompatActivity(), QuizAdapter.OnItemClickListener, OnClickListener {
 
     private val viewModel: QuizViewModel by viewModels()
 
     lateinit var recyclerView: RecyclerView
     lateinit var loadingBarContainer: FrameLayout
     lateinit var submitButton: Button
+    lateinit var answerCountHeader: TextView
 
     lateinit var adapter: QuizAdapter
 
@@ -34,12 +36,16 @@ class MainActivity : AppCompatActivity(), OnClickListener {
 
         submitButton = findViewById(R.id.submit_button)
         submitButton.setOnClickListener(this)
+
+        answerCountHeader = findViewById(R.id.header)
+
         adapter = QuizAdapter(this, mutableListOf())
         recyclerView.adapter = adapter
 
         // Use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
         recyclerView.setHasFixedSize(true)
+        showAnsweredCount()
         initObserver()
         getData()
     }
@@ -55,6 +61,7 @@ class MainActivity : AppCompatActivity(), OnClickListener {
 
             adapter.clear()
             adapter.addAll(myDataset)
+            showAnsweredCount()
         }
 
         viewModel.status.observe(this) { status ->
@@ -63,12 +70,14 @@ class MainActivity : AppCompatActivity(), OnClickListener {
                     loadingBarContainer.isVisible = true
                     submitButton.isVisible = false
                     recyclerView.isVisible = false
+                    answerCountHeader.isVisible = false
                 }
 
                 ApiStatus.ERROR -> {
                     loadingBarContainer.isVisible = false
                     submitButton.isVisible = true
                     recyclerView.isVisible = true
+                    answerCountHeader.isVisible = true
                     Toast.makeText(this, "Succes!", Toast.LENGTH_SHORT).show()
                 }
 
@@ -76,6 +85,7 @@ class MainActivity : AppCompatActivity(), OnClickListener {
                     loadingBarContainer.isVisible = false
                     submitButton.isVisible = true
                     recyclerView.isVisible = true
+                    answerCountHeader.isVisible = true
                     Toast.makeText(this, "Error! Please Try again later!", Toast.LENGTH_SHORT)
                         .show()
                 }
@@ -114,6 +124,16 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         )
 
         return list
+    }
+
+    override fun onItemClick() {
+        showAnsweredCount()
+    }
+
+    private fun showAnsweredCount() {
+        val isAnswered: Int = adapter.isAnsweredCount()
+        answerCountHeader.text =
+            getString(R.string.questions_count, isAnswered, adapter.itemCount)
     }
 
     override fun onClick(p0: View?) {

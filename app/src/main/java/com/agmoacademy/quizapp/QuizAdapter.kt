@@ -20,6 +20,8 @@ class QuizAdapter(
 
     private var onItemClickListener: OnItemClickListener? = null
 
+
+    fun isAnsweredCount(): Int = dataset.filter { it.isAnswered }.size
     fun isCorrectCount(): Int = dataset.filter { it.isCorrect }.size
 
     init {
@@ -77,21 +79,25 @@ class QuizAdapter(
         holder.radioButton3.text = questionList.get(2)
         holder.radioButton4.text = questionList.get(3)
         holder.radioButton1.setOnClickListener {
+            item.isAnswered = true
             item.isCorrect = holder.radioButton1.text == item.correctAnswer
             onItemClickListener?.onItemClick()
         }
 
         holder.radioButton2.setOnClickListener {
+            item.isAnswered = true
             item.isCorrect = holder.radioButton2.text == item.correctAnswer
             onItemClickListener?.onItemClick()
         }
 
         holder.radioButton3.setOnClickListener {
+            item.isAnswered = true
             item.isCorrect = holder.radioButton3.text == item.correctAnswer
             onItemClickListener?.onItemClick()
         }
 
         holder.radioButton4.setOnClickListener {
+            item.isAnswered = true
             item.isCorrect = holder.radioButton4.text == item.correctAnswer
             onItemClickListener?.onItemClick()
         }

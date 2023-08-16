@@ -22,4 +22,5 @@ data class Question(
     val incorrectAnswers: List<String>,
 
     var isCorrect: Boolean = false,
+    var isAnswered: Boolean = false,
 )
