@@ -1,17 +1,23 @@
 package com.agmoacademy.quizapp
 
 import android.os.Bundle
+import android.widget.FrameLayout
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.agmoacademy.quizapp.model.Question
+import com.agmoacademy.quizapp.viewmodel.ApiStatus
 import com.agmoacademy.quizapp.viewmodel.QuizViewModel
+import com.google.android.material.progressindicator.CircularProgressIndicator
 
 class MainActivity : AppCompatActivity() {
 
     private val viewModel: QuizViewModel by viewModels()
 
     lateinit var recyclerView: RecyclerView
+    lateinit var loadingBarContainer: FrameLayout
 
     lateinit var adapter: QuizAdapter
 
@@ -20,6 +26,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         recyclerView = findViewById(R.id.recycler_view)
+        loadingBarContainer = findViewById(R.id.progress_container)
+
         adapter = QuizAdapter(mutableListOf())
         recyclerView.adapter = adapter
 
@@ -43,6 +51,29 @@ class MainActivity : AppCompatActivity() {
             adapter.addAll(myDataset)
         }
 
+        viewModel.status.observe(this) { status ->
+            when (status) {
+                ApiStatus.LOADING -> {
+                    loadingBarContainer.isVisible = true
+                    recyclerView.isVisible = false
+                }
+
+                ApiStatus.ERROR -> {
+                    loadingBarContainer.isVisible = false
+                    recyclerView.isVisible = true
+                    Toast.makeText(this, "Succes!", Toast.LENGTH_SHORT).show()
+                }
+
+                ApiStatus.DONE -> {
+                    loadingBarContainer.isVisible = false
+                    recyclerView.isVisible = true
+                    Toast.makeText(this, "Error! Please Try again later!", Toast.LENGTH_SHORT)
+                        .show()
+                }
+
+                else -> Unit
+            }
+        }
     }
 
     private fun loadQuiz(): List<Question> {

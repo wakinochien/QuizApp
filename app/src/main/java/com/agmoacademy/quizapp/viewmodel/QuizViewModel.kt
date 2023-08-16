@@ -8,15 +8,19 @@ import com.agmoacademy.quizapp.model.Question
 import com.agmoacademy.quizapp.network.QuizApi
 import kotlinx.coroutines.launch
 
+enum class ApiStatus { LOADING, ERROR, DONE }
+
 /**
  * The [ViewModel] that is attached to the [MainActivity].
  */
 class QuizViewModel : ViewModel() {
 
     // The internal MutableLiveData that stores the status of the most recent request
+    private val _status = MutableLiveData<ApiStatus>()
     private val _list = MutableLiveData<List<Question>>()
 
     // The external immutable LiveData for the request status
+    val status: LiveData<ApiStatus> = _status
     val quizList: LiveData<List<Question>> = _list
 
     /**
@@ -25,6 +29,7 @@ class QuizViewModel : ViewModel() {
      */
      fun getQuizList() {
         viewModelScope.launch {
+            _status.value = ApiStatus.LOADING
             try {
                 val listResult = QuizApi.retrofitService.getQuizList(
                     amount = 10,
@@ -33,7 +38,9 @@ class QuizViewModel : ViewModel() {
                     type = "multiple"
                 )
                 _list.value = listResult.results
+                _status.value = ApiStatus.DONE
             } catch (e: Exception) {
+                _status.value = ApiStatus.ERROR
                 _list.value = listOf()
             }
         }
