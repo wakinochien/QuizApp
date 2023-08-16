@@ -16,6 +16,12 @@
         android:visibility="gone"
         app:layoutManager="LinearLayoutManager" />
 
+    <Button
+        android:id="@+id/submit_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/submit"/>
+
     <FrameLayout
         android:id="@+id/progress_container"
         android:layout_width="match_parent"

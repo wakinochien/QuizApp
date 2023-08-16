@@ -1,5 +1,6 @@
 package com.agmoacademy.quizapp
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,8 +14,21 @@ import com.agmoacademy.quizapp.model.Question
  * Adapter for the [RecyclerView] in [MainActivity]. Displays [Question] data object.
  */
 class QuizAdapter(
+    context: Context,
     private val dataset: MutableList<Question>,
 ) : RecyclerView.Adapter<QuizAdapter.ItemViewHolder>() {
+
+    private var onItemClickListener: OnItemClickListener? = null
+
+    fun isCorrectCount(): Int = dataset.filter { it.isCorrect }.size
+
+    init {
+        if (context is OnItemClickListener) onItemClickListener = context
+    }
+
+    interface OnItemClickListener {
+        fun onItemClick()
+    }
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -62,6 +76,25 @@ class QuizAdapter(
         holder.radioButton2.text = questionList.get(1)
         holder.radioButton3.text = questionList.get(2)
         holder.radioButton4.text = questionList.get(3)
+        holder.radioButton1.setOnClickListener {
+            item.isCorrect = holder.radioButton1.text == item.correctAnswer
+            onItemClickListener?.onItemClick()
+        }
+
+        holder.radioButton2.setOnClickListener {
+            item.isCorrect = holder.radioButton2.text == item.correctAnswer
+            onItemClickListener?.onItemClick()
+        }
+
+        holder.radioButton3.setOnClickListener {
+            item.isCorrect = holder.radioButton3.text == item.correctAnswer
+            onItemClickListener?.onItemClick()
+        }
+
+        holder.radioButton4.setOnClickListener {
+            item.isCorrect = holder.radioButton4.text == item.correctAnswer
+            onItemClickListener?.onItemClick()
+        }
     }
 
     fun clear() {

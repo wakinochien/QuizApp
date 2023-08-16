@@ -20,4 +20,6 @@ data class Question(
 
     @Json(name = "incorrect_answers")
     val incorrectAnswers: List<String>,
+
+    var isCorrect: Boolean = false,
 )
