@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">QuizApp</string>
+    <string name="questions_count">Questions (%1$d/%2$d)</string>
+    <string name="submit">Submit</string>
+    <string name="your_quiz_score">Your Quiz Score:</string>
 </resources>

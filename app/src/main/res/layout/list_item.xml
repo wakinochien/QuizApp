@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/cardBackgroundColor"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/item_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:text="1. This is a question" />
+
+        <RadioGroup
+            android:id="@+id/selection_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/selection_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="choice 1" />
+
+            <RadioButton
+                android:id="@+id/selection_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="choice 2" />
+
+            <RadioButton
+                android:id="@+id/selection_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="choice 3" />
+
+            <RadioButton
+                android:id="@+id/selection_4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="choice 4" />
+        </RadioGroup>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
