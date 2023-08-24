@@ -12,7 +12,10 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import com.agmoacademy.quizapp.model.Category
+import com.agmoacademy.quizapp.model.Difficulty
 import com.agmoacademy.quizapp.model.Question
+import com.agmoacademy.quizapp.model.Type
 import com.agmoacademy.quizapp.viewmodel.ApiStatus
 import com.agmoacademy.quizapp.viewmodel.QuizViewModel
 
@@ -98,9 +101,9 @@ class MainActivity : AppCompatActivity(), QuizAdapter.OnItemClickListener, OnCli
     private fun loadQuiz(): List<Question> {
         val list = listOf<Question>(
             Question(
-                category = "Science: Computers",
-                type = "multiple",
-                difficulty = "easy",
+                category = Category.ScienceComputers,
+                type = Type.Multiple,
+                difficulty = Difficulty.Easy,
                 question = "In any programming language, what is the most common way to iterate through an array?",
                 correctAnswer = "&#039;For&#039; loops",
                 incorrectAnswers = listOf(
@@ -110,9 +113,9 @@ class MainActivity : AppCompatActivity(), QuizAdapter.OnItemClickListener, OnCli
                 ),
             ),
             Question(
-                category = "Science: Computers",
-                type = "multiple",
-                difficulty = "easy",
+                category = Category.ScienceComputers,
+                type = Type.Multiple,
+                difficulty = Difficulty.Easy,
                 question = "What does CPU stand for?",
                 correctAnswer = "Central Processing Unit",
                 incorrectAnswers = listOf(

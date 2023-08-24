@@ -4,7 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.agmoacademy.quizapp.model.Category
+import com.agmoacademy.quizapp.model.Difficulty
 import com.agmoacademy.quizapp.model.Question
+import com.agmoacademy.quizapp.model.Type
 import com.agmoacademy.quizapp.network.QuizApi
 import kotlinx.coroutines.launch
 
@@ -33,9 +36,9 @@ class QuizViewModel : ViewModel() {
             try {
                 val listResult = QuizApi.retrofitService.getQuizList(
                     amount = 10,
-                    category = 18,
-                    difficulty = "easy",
-                    type = "multiple"
+                    category = Category.ScienceComputers.id,
+                    difficulty = Difficulty.Easy.value,
+                    type = Type.Multiple.value
                 )
                 _list.value = listResult.results
                 _status.value = ApiStatus.DONE
